@@ -1,17 +1,17 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Restaurante</title>
-  <link rel="stylesheet" href="/ControlRestaurant-app/styles.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <link rel="manifest" href="/ControlRestaurant-app/manifest.json" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#121212" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/ControlRestaurant-app/service-worker.js')
+      navigator.serviceWorker.register('service-worker.js')
         .then(() => console.log('✅ Service Worker registrado'))
         .catch(err => console.error('❌ Error al registrar el Service Worker:', err));
     }
@@ -20,9 +20,33 @@
 <body class="dark-mode">
   <div class="container">
     <h1><span class="mexican-icon">🌮</span>Restaurante</h1>
+    <form id="visitForm">
+      <input type="text" id="restaurant" list="restaurantList" placeholder="Nombre del restaurante" required />
+      <datalist id="restaurantList"></datalist>
+      <input type="date" id="date" required />
+      <input type="number" id="diners" placeholder="Comensales" required />
+      <input type="number" id="totalPrice" placeholder="Precio total (€)" step="0.01" required />
+      <div>💶 Precio medio: <span id="avgDisplay">0.00</span> €</div>
+      <div id="stars"></div>
+      <input type="file" id="ticket" accept="image/*" capture="environment" />
+      <textarea id="notes" placeholder="Observaciones"></textarea>
+      <button type="submit">Registrar visita</button>
+    </form>
+    <div>
+      <label for="filterYear">Filtrar por año:</label>
+      <select id="filterYear"><option value="all">Todos</option></select>
+    </div>
+    <table id="visitTable">
+      <thead>
+        <tr>
+          <th>Restaurante</th><th>Fecha</th><th>Comensales</th><th>Total</th><th>Precio Medio</th><th>Valoración</th><th>Ticket</th><th>Notas</th><th>Eliminar</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <div id="summaryList"></div>
     <div id="map" style="height: 400px; margin-top: 20px;"></div>
   </div>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script type="module" src="/ControlRestaurant-app/script.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
 </html>
